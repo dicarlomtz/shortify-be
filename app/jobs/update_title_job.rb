@@ -3,6 +3,9 @@ require 'open-uri'
 class UpdateTitleJob < ApplicationJob
   queue_as :default
 
+  # Gets a given page content by its url
+  # Turns the page content into a string
+  # Uses parse function to retrieve the title
   def perform(id)
     short_url = ShortUrl.find(id)
     html = URI.open(short_url.full_url)
