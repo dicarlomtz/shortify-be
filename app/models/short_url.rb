@@ -1,18 +1,9 @@
 class ShortUrl < ApplicationRecord
 
-  CHARACTERS = [*'0'..'9', *'a'..'z', *'A'..'Z'].freeze
-
-  validate :validate_full_url
-
-  def short_code
-  end
-
-  def update_title!
-  end
-
-  private
-
-  def validate_full_url
-  end
+  validates :title, presence: true, length: { maximum: 100 }, uniqueness: { case_sensitive: false }, allow_nil: true
+  validates :full_url, url: true, presence: true, uniqueness: { case_sensitive: false }
+  validates :short_code, presence: true, uniqueness: { case_sensitive: true }
+  validates :full_url, url: true, if: :full_url_changed?
+  before_validation :add_short_code
 
 end
