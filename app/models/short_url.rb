@@ -14,6 +14,10 @@ class ShortUrl < ApplicationRecord
      ShortUrl.find_by(short_code: short_code)
   end
 
+  def update_title!
+    UpdateTitleJob.perform_later(self.id)
+  end
+
   private
 
   def add_short_code
