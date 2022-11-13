@@ -22,6 +22,13 @@ class ShortUrlsController < ApplicationController
   end
 
   def show
+    @short_url = ShortUrl.find_by_short_code(params[:short_code])
+    unless @short_url.nil?
+      redirect_to @short_url.full_url
+      @short_url.increment_clicks!
+    else
+      render json: @short_url, status: :not_found
+    end
   end
 
 end
