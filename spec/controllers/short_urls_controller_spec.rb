@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ShortUrlsController, type: :controller do
+RSpec.describe Api::V1::ShortUrlsController, type: :controller do
 
   let(:parsed_response) { JSON.parse(response.body) }
 
