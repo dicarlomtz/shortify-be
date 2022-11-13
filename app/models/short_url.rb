@@ -6,4 +6,9 @@ class ShortUrl < ApplicationRecord
   validates :full_url, url: true, if: :full_url_changed?
   before_validation :add_short_code
 
+  def increment_clicks!
+    self.click_count += 1
+    self.save
+  end
+
 end
