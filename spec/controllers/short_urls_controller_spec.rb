@@ -39,7 +39,7 @@ RSpec.describe Api::V1::ShortUrlsController, type: :controller do
     let!(:short_url) { ShortUrl.create(full_url: "https://www.test.rspec") }
 
     it "redirects to the full_url" do
-      get :show, params: { id: short_url.short_code }, format: :json
+      get :show, params: { short_code: short_url.short_code }, format: :json
       expect(response).to redirect_to(short_url.full_url)
     end
 
