@@ -36,4 +36,12 @@ class Api::V1::ShortUrlsController < ApplicationController
     end
   end
 
+  def options
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*',
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-type'
+    head :ok
+  end
+
 end

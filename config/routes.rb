@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         get '/urls/:short_code' => 'short_urls#show'
         post '/urls' => 'short_urls#create'
         get '/urls' => 'short_urls#index'
+        match '/urls' => 'short_urls#options', via: :options
     end
   end
 
