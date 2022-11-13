@@ -15,4 +15,10 @@ class ShortUrl < ApplicationRecord
      ShortUrl.find_by(short_code: short_code)
   end
 
+  private
+
+  def add_short_code
+    self.short_code = SecureRandom.alphanumeric(8)
+  end
+
 end
