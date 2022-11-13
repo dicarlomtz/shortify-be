@@ -1,5 +1,3 @@
-require 'open-uri'
-
 class UpdateTitleJob < ApplicationJob
   queue_as :default
 
