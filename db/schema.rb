@@ -12,13 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2019_09_23_133432) do
 
-  create_table "short_urls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "short_urls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "full_url"
     t.string "title"
     t.integer "click_count", default: 0
+    t.string "short_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["full_url"], name: "index_short_urls_on_full_url"
+    t.index ["short_code"], name: "index_short_urls_on_short_code"
   end
 
 end
