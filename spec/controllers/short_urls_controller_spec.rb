@@ -29,7 +29,7 @@ RSpec.describe Api::V1::ShortUrlsController, type: :controller do
 
     it "does not create a short_url" do
       post :create, params: { full_url: "nope!" }, format: :json
-      expect(parsed_response['errors']).to be_include("Full url is not a valid url")
+      expect(parsed_response['errors']).to be_include("is not a valid url")
     end
 
   end
