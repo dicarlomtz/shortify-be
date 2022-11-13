@@ -44,12 +44,12 @@ RSpec.describe Api::V1::ShortUrlsController, type: :controller do
     end
 
     it "does not redirect to the full_url" do
-      get :show, params: { id: "nope" }, format: :json
+      get :show, params: { short_code: "nope" }, format: :json
       expect(response.status).to eq(404)
     end
 
     it "increments the click_count for the url" do
-      expect { get :show, params: { id: short_url.short_code }, format: :json }.to change { ShortUrl.find(short_url.id).click_count }.by(1)
+      expect { get :show, params: { short_code: short_url.short_code }, format: :json }.to change { ShortUrl.find(short_url.id).click_count }.by(1)
     end
 
   end
