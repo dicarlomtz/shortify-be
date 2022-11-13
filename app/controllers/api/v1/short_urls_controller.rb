@@ -1,6 +1,6 @@
 require 'json'
 
-class ShortUrlsController < ApplicationController
+class Api::V1::ShortUrlsController < ApplicationController
 
   # Since we're working on an API, we don't have authenticity tokens
   skip_before_action :verify_authenticity_token
