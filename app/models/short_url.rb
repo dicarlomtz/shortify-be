@@ -11,4 +11,8 @@ class ShortUrl < ApplicationRecord
     self.save
   end
 
+  def self.find_by_short_code(short_code)
+     ShortUrl.find_by(short_code: short_code)
+  end
+
 end
