@@ -13,6 +13,13 @@ module ShortTest
 
     config.active_job.queue_adapter = :resque
 
+    config.action_dispatch.default_headers = {
+      'Access-Control-Allow-Origin' => '*',
+      'Access-Control-Allow-Methods' => 'GET, POST',
+      'Access-Control-Request-Method' => '*',
+      'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-type'
+    }
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
