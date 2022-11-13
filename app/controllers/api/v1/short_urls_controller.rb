@@ -17,7 +17,7 @@ class ShortUrlsController < ApplicationController
   def create
     @short_url = ShortUrl.create(full_url: params[:full_url])
     if @short_url.valid?
-      UpdateTitleJob.perform_later(@short_url.id)
+      @short_url.update_title!
       render json: @short_url, status: :created
     else
       render json: JSON.generate({ errors: @short_url.errors.to_json }), status: :unprocessable_entity
