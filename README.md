@@ -3,6 +3,9 @@
 This project serves as an api backend for a url shortener
 This project can be used along this [frontend implentation](https://github.com/dicarlomtz/shortify-fe)
 
+## Requirements
+    - Docker Compose
+
 ## Intial Setup
 
     docker-compose build
