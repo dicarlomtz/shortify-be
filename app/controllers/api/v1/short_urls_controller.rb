@@ -7,7 +7,7 @@ class Api::V1::ShortUrlsController < ApplicationController
 
   # Retrieves top 100 urls by click counts
   def index
-    @short_urls = ShortUrl.order(:click_count)
+    @short_urls = ShortUrl.order(click_count: :desc)
                           .take(100)
     render json: JSON.generate({ urls: @short_urls.to_json })
   end
@@ -18,9 +18,14 @@ class Api::V1::ShortUrlsController < ApplicationController
     @short_url = ShortUrl.create(full_url: params[:full_url])
     if @short_url.valid?
       UpdateTitleJob.perform_later(@short_url.id)
-      render json: @short_url, status: :created
+      render json: JSON.generate({short_url: "#{request.host_with_port}/#{@short_url.short_code}"}), status: :created
     else
-      render json: JSON.generate({ errors: @short_url.errors.to_json }), status: :unprocessable_entity
+      @previously_added = ShortUrl.find_by_full_url(params[:full_url])
+      unless @previously_added.nil?
+        render json: JSON.generate({short_url: "#{request.host_with_port}/#{@previously_added.short_code}"}), status: :created
+      else
+        render json: JSON.generate({ errors: @short_url.errors.to_json }), status: :unprocessable_entity
+      end
     end
   end
 
@@ -32,7 +37,7 @@ class Api::V1::ShortUrlsController < ApplicationController
       redirect_to @short_url.full_url
       @short_url.increment_clicks!
     else
-      render json: @short_url, status: :not_found
+      redirect_to '/404.html'
     end
   end
 
