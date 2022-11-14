@@ -14,4 +14,6 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/:short_code', to: redirect('/api/v1/urls/%{short_code}')
+
 end
