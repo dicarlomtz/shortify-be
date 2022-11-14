@@ -1,7 +1,6 @@
 require 'open-uri'
 class ShortUrl < ApplicationRecord
 
-  validates :title, presence: true, length: { maximum: 100 }, uniqueness: { case_sensitive: false }, allow_nil: true
   validates :full_url, url: true, presence: true, uniqueness: { case_sensitive: false }
   validates :short_code, presence: true, uniqueness: { case_sensitive: true }
   before_validation :add_short_code
@@ -23,22 +22,22 @@ class ShortUrl < ApplicationRecord
   def update_title!
     html = URI.open(self.full_url)
     html_str = html.read
-
-    page_title = self.parse_page_title(html_str)
-
-    self.title = page_title
+    page_title = html_str.match(/<title\s*.*>\s*.*<\/title>/)
+    title = parse_page_title(page_title[0])
+    self.title = title
     self.save
   end
 
   private
 
   # Parses a html string to get title element content
-  def parse_page_title(html_str)
-    title_start =  html_str.index('title')
+  def parse_page_title(page_title)
+    title_start =  page_title.index('title')
 
     nil if title_start.nil?
 
-    str_cleaned = html_str[title_start + 6, html_str.size - 1]
+    str_cleaned = page_title[title_start + 6, page_title.size - 1]
+
     title_end = str_cleaned.index('title')
 
     nil if title_end.nil?
@@ -49,7 +48,9 @@ class ShortUrl < ApplicationRecord
 
   # Generates a random code to identify the url
   def add_short_code
-    self.short_code = SecureRandom.alphanumeric(8)
+    if self.short_code.nil?
+      self.short_code = SecureRandom.alphanumeric(8)
+    end
   end
 
 end
