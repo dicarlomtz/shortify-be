@@ -1,6 +1,6 @@
 # Shortify Backend
 
-This project serves as an api backend for a url shortener
+This project serves as an api backend for an url shortener
 This project can be used along this [frontend implentation](https://github.com/dicarlomtz/shortify-fe)
 
 ## Requirements
